@@ -52,6 +52,6 @@ jobs:
         with:
           context: .
           push: true
-          tags: artoo2021/${{ github.repository }}:latest
+          tags: artoo2021/test-workflow:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max

@@ -1,7 +1,17 @@
+import { useEffect } from "react";
 import fetchBlogs from "../../https/blog";
 
 export default function NextPage(props: {blogs:any, env:any}){
-  console.log(props.env);
+  console.log('env from static props',props.env);
+
+  useEffect(()=>{
+    const fetchEnv = async()=>{
+      const res = await fetch('/api/env');
+      const data = await res.json();
+      console.log(data);
+    }
+    fetchEnv();
+  },[]);
 
   return (
     <main>
@@ -14,11 +24,10 @@ export default function NextPage(props: {blogs:any, env:any}){
 
 export const getStaticProps = async()=>{
   const blogs = await fetchBlogs();
-  const env = await fetch('/api/env');
   return {
     props: {
       blogs,
-      env
+      env:process.env.CMS_URL
     }
   }
 }

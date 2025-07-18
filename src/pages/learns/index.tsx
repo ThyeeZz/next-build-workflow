@@ -1,7 +1,18 @@
 import fetchLearns from "../../https/learn";
+import { useEffect } from "react";
 
 export default function NextPage(props: {learns:any, env:any}){
-  console.log(props.env);
+  console.log('evn from server side props',props.env);
+
+  useEffect(()=>{
+    const fetchEnv = async()=>{
+      const res = await fetch('/api/env');
+      const data = await res.json();
+      console.log(data);
+    }
+    fetchEnv();
+  },[]);
+
   return (
     <main>
       <h1>Learns</h1>
@@ -13,11 +24,11 @@ export default function NextPage(props: {learns:any, env:any}){
 
 export const getServerSideProps = async()=>{
   const learns = await fetchLearns();
-  const env = await fetch('/api/env');
+  
   return {
     props: {
       learns,
-      env
+      env:process.env.CMS_URL
     }
   }
 }

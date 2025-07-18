@@ -1,6 +1,7 @@
 import fetchBlogs from "../../https/blog";
 
-export default function NextPage(props: {blogs:any}){
+export default function NextPage(props: {blogs:any, env:any}){
+  console.log(props.env);
 
   return (
     <main>
@@ -13,9 +14,11 @@ export default function NextPage(props: {blogs:any}){
 
 export const getStaticProps = async()=>{
   const blogs = await fetchBlogs();
+  const env = await fetch('/api/env');
   return {
     props: {
-      blogs
+      blogs,
+      env
     }
   }
 }
